@@ -9,7 +9,7 @@ A Claude Code plugin marketplace for OpenSpec-driven development. The lean succe
 |---|---|
 | worker / reviewer / supervisor subagents | The main thread builds and self-reviews; no subagents |
 | Guard + tripwire hooks | None |
-| `/dmons:scaffold` + `/dmons:update-scaffold` + migrations | `/emmz:setup` — a Makefile and one `CLAUDE.md` section, re-runnable |
+| `/dmons:scaffold` + `/dmons:update-scaffold` + migrations | `/emmz:setup` — a Makefile and one `CLAUDE.md` section, re-runnable; `/emmz:migrate-from-dmons` to switch over |
 | `/dmons:implementation` skill + `# dmons-config` | The loop lives in `CLAUDE.md`, on top of `/opsx:apply` |
 | One `DEVLOG.md` per change with a pinned `## NEXT` | A `devlog/` folder of append-only timestamped notes; the newest note's `## Next` is the resume point |
 
@@ -24,7 +24,8 @@ The skills assume a repo with `openspec/` in it (run `openspec init` first) and 
 |---|---|
 | `/emmz:discovery` | Greenfield only: gathers requirements (what and why) with zero tech assumptions, then hands off to `opsx:explore`. |
 | `/emmz:architecture` | Makes the tech decisions against those requirements, including the exact gate commands, and logs every SDK, CLI and login the project needs in `docs/dependencies.md`, then hands off to `opsx:propose`. |
-| `/emmz:setup` | Checks every dependency is installed and authenticated (offers to install; hands logins to you), then writes a `Makefile` of gate targets plus `make deps` (each prints `LABEL_EXIT:<n>`) and an `## OpenSpec workflow` section in `CLAUDE.md`. Migrates dmons-scaffolded repos. |
+| `/emmz:setup` | Checks every dependency is installed and authenticated (offers to install; hands logins to you), then writes a `Makefile` of gate targets plus `make deps` (each prints `LABEL_EXIT:<n>`) and an `## OpenSpec workflow` section in `CLAUDE.md`. |
+| `/emmz:migrate-from-dmons` | Removes dmons's agents, hooks and `CLAUDE.md` workflow sections; moves the project's binding decisions and hazards into `CLAUDE.md`; seeds a devlog note from each in-flight `DEVLOG.md`. Run `/emmz:setup` after it. |
 | `/emmz:devlog` | Writes a note to `openspec/changes/<name>/devlog/YYYYMMDD-HHMM-<slug>.md`. |
 
 ## Install
@@ -40,7 +41,8 @@ The skills assume a repo with `openspec/` in it (run `openspec init` first) and 
 /emmz:discovery → opsx:explore → /emmz:architecture → opsx:propose → /emmz:setup → /opsx:apply
 ```
 
-An existing repo starts at `/emmz:setup`.
+An existing repo starts at `/emmz:setup`. A repo scaffolded by dmons runs `/emmz:migrate-from-dmons`
+first, then `/emmz:setup`.
 
 During `/opsx:apply`, the `CLAUDE.md` section drives each `## N.` section of `tasks.md` through the same
 steps: implement → self-review the section diff against the spec → `make gates` → tick → devlog note →

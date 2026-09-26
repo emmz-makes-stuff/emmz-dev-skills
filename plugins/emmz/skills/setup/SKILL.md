@@ -1,6 +1,6 @@
 ---
 name: setup
-description: Set up an OpenSpec repo for the emmz workflow — verify every dependency in docs/dependencies.md is installed and authenticated (offering to install what's missing), generate a root Makefile of gate targets plus a `make deps` check (each printing LABEL_EXIT:<n>), and add an "OpenSpec workflow" section to CLAUDE.md describing the section-by-section build loop, self-review, devlog notes, and when to stop and ask. No subagents, no hooks. Also migrates a repo scaffolded by dmons. Use when the user says "set up the workflow", "add the gates", "check my tools", "set up this repo for openspec", "migrate off dmons", or after /emmz:architecture.
+description: Set up an OpenSpec repo for the emmz workflow — verify every dependency in docs/dependencies.md is installed and authenticated (offering to install what's missing), generate a root Makefile of gate targets plus a `make deps` check (each printing LABEL_EXIT:<n>), and add an "OpenSpec workflow" section to CLAUDE.md describing the section-by-section build loop, self-review, devlog notes, and when to stop and ask. No subagents, no hooks. Use when the user says "set up the workflow", "add the gates", "check my tools", "set up this repo for openspec", after /emmz:architecture, or after /emmz:migrate-from-dmons.
 ---
 
 # Setup
@@ -24,10 +24,7 @@ every guidance comment (`#!!` lines in the Makefile; HTML comments in the markdo
 
 - **dmons scaffolding** — any of `.claude/agents/{worker*,reviewer,supervisor}.md`,
   `.claude/hooks/dmons-*.sh`, a `# dmons-config` block or `<!-- dmons-scaffold:` stamp in `CLAUDE.md`.
-  If found, list exactly what you'd remove (the agent files, the hook scripts and their entries in
-  `.claude/settings.json`, and the dmons workflow sections of `CLAUDE.md`) and **ask before removing**.
-  Keep the project-specific content worth keeping (project header, hazards, binding decisions) in
-  `CLAUDE.md`. Existing `DEVLOG.md` files stay as history.
+  If found, **stop** and tell the user to run `/emmz:migrate-from-dmons` first, then re-run setup.
 - **An existing `## OpenSpec workflow` section** with an `emmz-setup` stamp → this is a re-run; you'll
   replace that section in place, keeping any hand edits the user wants kept — show the diff.
 - **An existing `Makefile`** → merge: keep its other targets, add or update only the gate and `deps`
