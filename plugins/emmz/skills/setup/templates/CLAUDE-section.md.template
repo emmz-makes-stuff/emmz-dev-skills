@@ -15,13 +15,21 @@ paraphrase them.
 {{GATE_LIST}}
 <!-- One bullet per target: `make build` — <what it wraps>. End with `make gates` — all of the above. -->
 
+`make deps` is separate: it checks that every tool and login in `docs/dependencies.md` is present.
+
 ### Starting a change
 
 1. Ask which change to build, even if there is only one (`make changes`).
 2. Resume point: the newest devlog note's `## Next` and the first unticked task in `tasks.md`.
-3. Clean working tree (unless resuming a recorded stop), `make validate` green, on branch
+3. `make deps` → `DEPS_EXIT:0`. If not, stop: offer to install what's missing, and hand any login to the
+   user as `! <cmd>` — never try to authenticate yourself.
+4. Clean working tree (unless resuming a recorded stop), `make validate` green, on branch
    `change/<change-name>`.
-4. Read `proposal.md`, `design.md`, and the specs the change touches.
+5. Read `proposal.md`, `design.md`, and the specs the change touches.
+
+A task that needs a tool, SDK, service or login not in `docs/dependencies.md` is a stop: ask before
+adding it. Once agreed, add its row there and its check to `make deps` in the same section commit, and
+say why in a devlog note.
 
 ### Each section (`## N.` in `tasks.md`), in order
 

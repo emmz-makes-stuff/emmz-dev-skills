@@ -49,3 +49,17 @@ gates:
 	@$(MAKE) --no-print-directory -k {{GATE_TARGETS}}; code=$$?; \
 	echo "GATES_EXIT:$$code"; exit $$code
 #!! {{GATE_TARGETS}} = every gate target above plus `validate`, e.g. `build test format validate`.
+
+# Every tool and login in docs/dependencies.md — keep the two in step. Not part of
+# `gates`: it checks the machine, not the code, and auth checks may need the network.
+deps:
+	@fail=0; \
+	{{DEP_CHECKS}}
+	echo "DEPS_EXIT:$$fail"; exit $$fail
+#!! {{DEP_CHECKS}} = one line per docs/dependencies.md row, each ending `; \` and indented with a TAB:
+#!!   <TAB>dotnet --version >/dev/null 2>&1 || { echo "MISSING dotnet — brew install dotnet"; fail=1; }; \
+#!!   <TAB>gh --version >/dev/null 2>&1 || { echo "MISSING gh — brew install gh"; fail=1; }; \
+#!!   <TAB>gh auth status >/dev/null 2>&1 || { echo "NOT AUTHENTICATED gh — gh auth login"; fail=1; }; \
+#!! Auth checks get their own line so a missing login is reported separately from a missing tool.
+#!! Where Version matters, check it too, e.g.
+#!!   <TAB>dotnet --version 2>/dev/null | grep -q '^10\.' || { echo "WRONG VERSION dotnet — need 10.x"; fail=1; }; \
