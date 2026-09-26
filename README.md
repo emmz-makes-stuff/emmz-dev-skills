@@ -31,7 +31,7 @@ The skills assume a repo with `openspec/` in it (run `openspec init` first) and 
 ## Install
 
 ```
-/plugin marketplace add emmz/emmz-dev-skills
+/plugin marketplace add emmz-makes-stuff/emmz-dev-skills
 /plugin install emmz@emmz-dev-skills
 ```
 
