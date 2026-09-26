@@ -1,0 +1,51 @@
+#!! TEMPLATE: ./Makefile. Fill every {{PLACEHOLDER}}, then DELETE every line starting with `#!!`.
+#!! Plain `#` comments are part of the generated file — keep them.
+#!! RECIPE LINES MUST START WITH A LITERAL TAB.
+#!! Delete any target the project genuinely has no command for (e.g. no separate linter) — but a gate
+#!! you can't derive is confirmed with the user, never silently dropped.
+# {{PROJECT_NAME}} — gate targets.
+#
+# Every gate prints its own exit code as `LABEL_EXIT:<n>` and exits with it, so a
+# result can be quoted rather than inferred from output that may look clean.
+# `gates` runs the whole set with -k, so one run reports every failure.
+
+SHELL := /bin/bash
+
+CHANGES := $(notdir $(patsubst %/,%,$(filter-out %/archive/,$(wildcard openspec/changes/*/))))
+
+.PHONY: {{PHONY_LIST}}
+
+build:
+	@{{BUILD_CMD}}; code=$$?; echo "BUILD_EXIT:$$code"; exit $$code
+
+test:
+	@{{TEST_CMD}}; code=$$?; echo "TEST_EXIT:$$code"; exit $$code
+
+format:
+	@{{FORMAT_CHECK_CMD}}; code=$$?; echo "FORMAT_EXIT:$$code"; exit $$code
+
+lint:
+	@{{LINT_CMD}}; code=$$?; echo "LINT_EXIT:$$code"; exit $$code
+
+#!! MULTI-STACK: add a prefixed block per extra stack, labels prefixed to match:
+#!!   web-build:
+#!!   <TAB>@npm --prefix web run build; code=$$?; echo "WEB_BUILD_EXIT:$$code"; exit $$code
+#!! and include those targets in `gates` below.
+
+# Validates every active change. No active change is a failure, not a silent pass.
+validate:
+	@fail=0; \
+	if [ -z "$(CHANGES)" ]; then \
+		echo "no active change found under openspec/changes/"; fail=1; \
+	else \
+		for c in $(CHANGES); do openspec validate $$c --strict || fail=1; done; \
+	fi; \
+	echo "VALIDATE_EXIT:$$fail"; exit $$fail
+
+changes:
+	@echo "$(CHANGES)"
+
+gates:
+	@$(MAKE) --no-print-directory -k {{GATE_TARGETS}}; code=$$?; \
+	echo "GATES_EXIT:$$code"; exit $$code
+#!! {{GATE_TARGETS}} = every gate target above plus `validate`, e.g. `build test format validate`.

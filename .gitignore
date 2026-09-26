@@ -1,0 +1,16 @@
+# Local Claude Code state
+.claude/settings.local.json
+.claude/.cc-writes/
+
+# macOS
+.DS_Store
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+
+# openspec CLI artifacts (not part of the marketplace)
+openspec/
+.claude/commands/
+.claude/skills/

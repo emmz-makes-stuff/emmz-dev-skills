@@ -1,0 +1,11 @@
+{
+  "name": "emmz",
+  "version": "0.1.0",
+  "description": "Lean OpenSpec workflow: greenfield discovery, architecture decisions, a Makefile gate surface plus a CLAUDE.md build loop (no subagents, no hooks), and a timestamped devlog folder per change.",
+  "author": {
+    "name": "emmz",
+    "email": "rendle@gmail.com"
+  },
+  "license": "MIT",
+  "keywords": ["openspec", "workflow", "devlog", "discovery", "architecture", "makefile", "gates"]
+}

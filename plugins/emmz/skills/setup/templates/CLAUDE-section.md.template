@@ -1,0 +1,60 @@
+<!-- TEMPLATE: appended to (or replacing the same section in) the repo's CLAUDE.md.
+     Fill every {{PLACEHOLDER}}, then delete every HTML comment except the emmz-setup stamp. -->
+## OpenSpec workflow
+
+<!-- emmz-setup: {{PLUGIN_VERSION}} -->
+
+Changes are tracked with OpenSpec. Build them with `/opsx:apply`, following this loop on top of it.
+Notes go in the change's `devlog/` folder via `/emmz:devlog`.
+
+### Gates
+
+Run through the `Makefile`; a gate passed only if you saw its `LABEL_EXIT:0`. Quote exit lines, never
+paraphrase them.
+
+{{GATE_LIST}}
+<!-- One bullet per target: `make build` — <what it wraps>. End with `make gates` — all of the above. -->
+
+### Starting a change
+
+1. Ask which change to build, even if there is only one (`make changes`).
+2. Resume point: the newest devlog note's `## Next` and the first unticked task in `tasks.md`.
+3. Clean working tree (unless resuming a recorded stop), `make validate` green, on branch
+   `change/<change-name>`.
+4. Read `proposal.md`, `design.md`, and the specs the change touches.
+
+### Each section (`## N.` in `tasks.md`), in order
+
+1. Note the base commit (`git rev-parse --short HEAD`) — in a start note for larger sections.
+2. Implement the section's tasks, with tests. Write a devlog note for any non-obvious decision.
+3. **Self-review** `git diff <base>` plus untracked files, against the spec requirements rather than
+   just the tasks: missing requirements, untested behaviour, swallowed errors, dead or stub code,
+   contracts that drifted from earlier sections, violations of `design.md ## Decisions`{{ADR_CLAUSE}}.
+   Fix what you find.
+4. `make gates` — all green. A section may land red only as a deliberate, stated call (e.g. a test a
+   later section turns green), recorded in the devlog note and the commit body.
+5. Tick the section's tasks, write the section-done devlog note, then make **one commit** for the
+   section:
+   ```
+   feat(<change-name>): <section summary> (§N)
+
+   - N.1 <task summary>
+   - N.2 <task summary>
+   ```
+
+### Finishing a change
+
+1. Self-review the whole change, `git diff <first-section-base>..HEAD`: duplicated abstractions,
+   leftover scaffolding, cross-section drift, and whether the spec is genuinely satisfied. Fixes land as
+   `fix(<change-name>): …`.
+2. Write the change-done devlog note, report to the user, and **offer** `/opsx:archive` — wait for a yes.
+
+### Stop and ask
+
+Stop when: a requirement is ambiguous or contradicts the spec or design; scope would change; a task
+needs human verification ({{HITL_EXAMPLES}}); or gates won't go green after two honest attempts.
+
+To stop: leave work uncommitted and tasks unticked; write a `stopped-…` devlog note stating exactly what
+blocked and the question; send a push notification if the tool is available; end the turn with the
+question — for human verification, a copy-pasteable recipe. Never decide a product question yourself
+and flag it afterwards.
