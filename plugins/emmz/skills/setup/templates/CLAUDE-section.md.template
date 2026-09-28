@@ -41,21 +41,31 @@ say why in a devlog note.
    Fix what you find.
 4. `make gates` — all green. A section may land red only as a deliberate, stated call (e.g. a test a
    later section turns green), recorded in the devlog note and the commit body.
-5. Tick the section's tasks, write the section-done devlog note, then make **one commit** for the
-   section:
+5. Tick the section's tasks and write the section-done devlog note. Assume the context will be cleared
+   before the next section, so the note must be enough to resume from alone. Its `## Next` names the
+   next section and its first task (or the whole-change review, after the last section). It also records
+   anything this session knows that the repo doesn't: the user's answers, gotchas you hit, deferred
+   nits, decisions in flight. Then make **one commit** for the section:
    ```
    feat(<change-name>): <section summary> (§N)
 
    - N.1 <task summary>
    - N.2 <task summary>
    ```
+6. **Hand off.** End the turn by asking whether the user wants to `/clear` the context or restart
+   `claude` before the next step. If they'd rather keep going, continue in this session.
 
 ### Finishing a change
 
 1. Self-review the whole change, `git diff <first-section-base>..HEAD`: duplicated abstractions,
-   leftover scaffolding, cross-section drift, and whether the spec is genuinely satisfied. Fixes land as
-   `fix(<change-name>): …`.
-2. Write the change-done devlog note, report to the user, and **offer** `/opsx:archive` — wait for a yes.
+   leftover scaffolding, cross-section drift, and whether the spec is genuinely satisfied.
+2. Write the change-done devlog note and report to the user. Then **offer** to run the `code-review`
+   skill on the change branch before archiving, and run it if they say yes.
+3. Fixes from either review don't land as loose commits. Add them to `tasks.md` as one or more new
+   sections (`## N+1. Review fixes: <theme>`), agree them with the user, and build them with the
+   section loop above, hand-off included. Then return to step 2.
+4. Once the review is done or declined and no fix sections are open, **offer** `/opsx:archive`, and
+   wait for a yes.
 
 ### Stop and ask
 

@@ -46,8 +46,10 @@ first, then `/emmz:setup`.
 
 During `/opsx:apply`, the `CLAUDE.md` section drives each `## N.` section of `tasks.md` through the same
 steps: implement → self-review the section diff against the spec → `make gates` → tick → devlog note →
-one commit. The run stops and asks on ambiguity, scope changes, human-only verification, or gates that
-won't go green.
+one commit → hand off (asks whether to clear the context or restart `claude`). The run stops and asks on
+ambiguity, scope changes, human-only verification, or gates that won't go green. When the last section
+lands, it offers `/code-review` before `/opsx:archive`. Fixes from that review become new sections in
+`tasks.md`, built the same way.
 
 ## Devlog
 

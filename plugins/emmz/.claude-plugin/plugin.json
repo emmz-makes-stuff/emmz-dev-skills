@@ -1,6 +1,6 @@
 {
   "name": "emmz",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Lean OpenSpec workflow: greenfield discovery, architecture decisions, a Makefile gate surface plus a CLAUDE.md build loop (no subagents, no hooks), a timestamped devlog folder per change, and a migration off dmons.",
   "author": {
     "name": "emmz",

@@ -70,7 +70,9 @@ Create the `devlog/` folder on first use.
 - **Decision** — any non-obvious choice: what, why, the alternatives rejected.
 - **Question / answer** — a question put to the user, and later their answer as its own note.
 - **Section done** — tasks completed, a one-line self-review verdict with anything found and fixed, the
-  gate exit lines (`GATES_EXIT:0`). Written *before* the section commit so it lands in it.
+  gate exit lines (`GATES_EXIT:0`). Written *before* the section commit so it lands in it. The user
+  is expected to clear the context after it, so a cold session must be able to resume from this note
+  alone. Its `## Next` carries whatever the session knows that the repo doesn't.
 - **Stopped** — exactly what blocked and the question pending. The state must be resumable from this
   note alone; the session may die before the answer arrives.
 - **Change done** — the whole-change review outcome and anything parked for a later change.
