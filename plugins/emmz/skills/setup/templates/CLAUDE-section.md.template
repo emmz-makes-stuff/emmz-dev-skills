@@ -20,7 +20,8 @@ paraphrase them.
 ### Starting a change
 
 1. Ask which change to build, even if there is only one (`make changes`).
-2. Resume point: the newest devlog note's `## Next` and the first unticked task in `tasks.md`.
+2. Resume point: the newest devlog note's `## Next` and the first unticked task in `tasks.md`. In a
+   fresh session, `/emmz:pickup` does this and steps 3–5.
 3. `make deps` → `DEPS_EXIT:0`. If not, stop: offer to install what's missing, and hand any login to the
    user as `! <cmd>` — never try to authenticate yourself.
 4. Clean working tree (unless resuming a recorded stop), `make validate` green, on branch
@@ -52,8 +53,9 @@ say why in a devlog note.
    - N.1 <task summary>
    - N.2 <task summary>
    ```
-6. **Hand off.** End the turn by asking whether the user wants to `/clear` the context or restart
-   `claude` before the next step. If they'd rather keep going, continue in this session.
+6. **Hand off.** Run `/emmz:handoff` to check that a cold session can resume from the repo alone. Then
+   end the turn by asking whether the user wants to `/clear` the context or restart `claude` before the
+   next step. If they'd rather keep going, continue in this session.
 
 ### Finishing a change
 
@@ -76,3 +78,6 @@ To stop: leave work uncommitted and tasks unticked; write a `stopped-…` devlog
 blocked and the question; send a push notification if the tool is available; end the turn with the
 question — for human verification, a copy-pasteable recipe. Never decide a product question yourself
 and flag it afterwards.
+
+Before the user ends a session or clears the context at any other point, run `/emmz:handoff`. Resume
+with `/emmz:pickup`.

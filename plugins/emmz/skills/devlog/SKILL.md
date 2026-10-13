@@ -36,7 +36,8 @@ ls openspec/changes/<name>/devlog/ | tail -n 5
 
 Read the newest note in full and the few before it for context. Read further back only when a note
 refers to something earlier. Its `## Next` is authoritative for what happens next, alongside the first
-unticked task in `tasks.md`.
+unticked task in `tasks.md`. `/emmz:pickup` does the full resume (cross-check, pre-flight, carry on);
+`/emmz:handoff` checks the newest note is good enough to resume from before the context is cleared.
 
 ## Writing a note
 

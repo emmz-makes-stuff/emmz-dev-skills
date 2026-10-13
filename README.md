@@ -27,6 +27,8 @@ The skills assume a repo with `openspec/` in it (run `openspec init` first) and 
 | `/emmz:setup` | Checks every dependency is installed and authenticated (offers to install; hands logins to you), then writes a `Makefile` of gate targets plus `make deps` (each prints `LABEL_EXIT:<n>`) and an `## OpenSpec workflow` section in `CLAUDE.md`. |
 | `/emmz:migrate-from-dmons` | Removes dmons's agents, hooks and `CLAUDE.md` workflow sections; moves the project's binding decisions and hazards into `CLAUDE.md`; seeds a devlog note from each in-flight `DEVLOG.md`. Run `/emmz:setup` after it. |
 | `/emmz:devlog` | Writes a note to `openspec/changes/<name>/devlog/YYYYMMDD-HHMM-<slug>.md`. |
+| `/emmz:handoff` | Run before `/clear` or quitting: checks the newest devlog note's `## Next` is the real resume point, `tasks.md` matches what landed, and nothing that only lives in the conversation (decisions, answers, uncommitted or background work) is lost. Writes a handoff note if needed, then says whether it's safe to exit. |
+| `/emmz:pickup` | Run in a fresh session: finds the change, reads the newest devlog note, cross-checks it against `tasks.md` and git, runs the pre-flight, and carries on. |
 
 ## Install
 
@@ -46,7 +48,8 @@ first, then `/emmz:setup`.
 
 During `/opsx:apply`, the `CLAUDE.md` section drives each `## N.` section of `tasks.md` through the same
 steps: implement → self-review the section diff against the spec → `make gates` → tick → devlog note →
-one commit → hand off (asks whether to clear the context or restart `claude`). The run stops and asks on
+one commit → hand off (runs `/emmz:handoff`, then asks whether to clear the context or restart
+`claude`; the next session starts with `/emmz:pickup`). The run stops and asks on
 ambiguity, scope changes, human-only verification, or gates that won't go green. When the last section
 lands, it offers `/code-review` before `/opsx:archive`. Fixes from that review become new sections in
 `tasks.md`, built the same way.
