@@ -22,7 +22,7 @@ The skills assume a repo with `openspec/` in it (run `openspec init` first) and 
 
 | Skill | What it does |
 |---|---|
-| `/emmz:discovery` | Greenfield only: gathers requirements (what and why) with zero tech assumptions, then hands off to `opsx:explore`. |
+| `/emmz:discovery` | Greenfield only: gathers requirements (what and why) with zero tech assumptions, documents them in `docs/DISCOVERY.md`, then hands off to `opsx:explore`. |
 | `/emmz:architecture` | Makes the tech decisions against those requirements, including the exact gate commands, and logs every SDK, CLI and login the project needs in `docs/dependencies.md`, then hands off to `opsx:propose`. |
 | `/emmz:setup` | Checks every dependency is installed and authenticated (offers to install; hands logins to you), then writes a `Makefile` of gate targets plus `make deps` (each prints `LABEL_EXIT:<n>`) and an `## OpenSpec workflow` section in `CLAUDE.md`. |
 | `/emmz:migrate-from-dmons` | Removes dmons's agents, hooks and `CLAUDE.md` workflow sections; moves the project's binding decisions and hazards into `CLAUDE.md`; seeds a devlog note from each in-flight `DEVLOG.md`. Run `/emmz:setup` after it. |

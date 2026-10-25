@@ -12,7 +12,8 @@ user, each one argued from the requirements rather than picked by habit, then ha
 ## Preconditions
 
 1. `openspec/` exists. If not → `openspec init` first.
-2. Requirements have been captured (discovery / `opsx:explore`). If not → `/emmz:discovery`.
+2. Requirements have been captured (`docs/DISCOVERY.md` from discovery, or `opsx:explore`). If not →
+   `/emmz:discovery`.
 3. The tech is still open (no populated `design.md ## Decisions` or ADRs covering it). If it's already
    decided → go straight to `opsx:propose` / `opsx:apply`.
 
@@ -29,7 +30,8 @@ user, each one argued from the requirements rather than picked by habit, then ha
 ## Procedure
 
 1. **Gate** on the preconditions.
-2. **Read the requirements.** Every recommendation must trace to an outcome, constraint, or scope line.
+2. **Read the requirements** — `docs/DISCOVERY.md` when it exists. Every recommendation must trace to an
+   outcome, constraint, or scope line.
 3. **Decide one call at a time:** platform, language(s), frameworks/libraries, datastore,
    hosting/deploy, core tooling. Don't over-decide; leave genuinely deferrable details for later.
 4. **Settle the gate commands** (below).
