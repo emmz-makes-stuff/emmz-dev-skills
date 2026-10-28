@@ -1,1 +1,1 @@
-{ "modules": ["./clear-pickup.ts", "./context-meter.ts"] }
+{ "modules": ["./register.ts"] }

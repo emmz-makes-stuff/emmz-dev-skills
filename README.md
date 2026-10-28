@@ -8,7 +8,7 @@ A Claude Code plugin marketplace for OpenSpec-driven development. The lean succe
 | dmon-dev (`dmons`) | emmz-dev-skills (`emmz`) |
 |---|---|
 | worker / reviewer / supervisor subagents | The main thread builds and self-reviews; no subagents |
-| Guard + tripwire hooks | No guards; two helper modules (see [Hooks](#hooks)) |
+| Guard + tripwire hooks | No guards; one helper module (see [Hooks](#hooks)) |
 | `/dmons:scaffold` + `/dmons:update-scaffold` + migrations | `/emmz:setup` — a Makefile and one `CLAUDE.md` section, re-runnable; `/emmz:migrate-from-dmons` to switch over |
 | `/dmons:implementation` skill + `# dmons-config` | The loop lives in `CLAUDE.md`, on top of `/opsx:apply` |
 | One `DEVLOG.md` per change with a pinned `## NEXT` | A `devlog/` folder of append-only timestamped notes; the newest note's `## Next` is the resume point |
@@ -32,12 +32,12 @@ The skills assume a repo with `openspec/` in it (run `openspec init` first) and 
 
 ## Hooks
 
-Two hook modules in `plugins/emmz/hooks/`, registered for every session:
+One hooks module, `plugins/emmz/hooks/register.ts` (Claude Code allows one per plugin), registered for every session. It adds:
 
-| Module | What it does |
+| Feature | What it does |
 |---|---|
-| `clear-pickup.ts` | Adds `/clear-pickup [change]` and a `clear_and_pickup` tool the agent can call: each queues `/clear`, then `/emmz:pickup`, once the turn ends. Run `/emmz:handoff` first. |
-| `context-meter.ts` | Adds a `context_usage` tool reporting tokens used, window size and percentage, and nudges the agent once each time the fill passes 40% and 50%. |
+| clear-pickup | Adds `/clear-pickup [change]` and a `clear_and_pickup` tool the agent can call: each queues `/clear`, then `/emmz:pickup`, once the turn ends. Run `/emmz:handoff` first. |
+| context-meter | Adds a `context_usage` tool reporting tokens used, window size and percentage, and nudges the agent once each time the fill passes 40% and 50%. |
 
 ## Install
 

@@ -1,6 +1,6 @@
 {
   "name": "emmz-dev-skills",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Claude Code skills for OpenSpec-driven development — a lean successor to dmon-dev.",
   "license": "MIT",
   "owner": {
@@ -10,7 +10,7 @@
   "plugins": [
     {
       "name": "emmz",
-      "version": "0.1.5",
+      "version": "0.1.6",
       "description": "Lean OpenSpec workflow: greenfield discovery, architecture decisions, a Makefile gate surface plus a CLAUDE.md build loop (no subagents, no hooks), a timestamped devlog folder per change, a migration off dmons, a /clear-pickup command and tool, and a context-usage meter that nudges past 40% and 50%.",
       "source": "./plugins/emmz",
       "author": {
