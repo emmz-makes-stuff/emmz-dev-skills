@@ -37,7 +37,7 @@ Two hook modules in `plugins/emmz/hooks/`, registered for every session:
 | Module | What it does |
 |---|---|
 | `clear-pickup.ts` | Adds `/clear-pickup [change]` and a `clear_and_pickup` tool the agent can call: each queues `/clear`, then `/emmz:pickup`, once the turn ends. Run `/emmz:handoff` first. |
-| `context-meter.ts` | Adds a `context_usage` tool reporting tokens used, window size and percentage, and nudges the agent once each time the fill passes 70% and 85%. |
+| `context-meter.ts` | Adds a `context_usage` tool reporting tokens used, window size and percentage, and nudges the agent once each time the fill passes 40% and 50%. |
 
 ## Install
 
@@ -57,8 +57,9 @@ first, then `/emmz:setup`.
 
 During `/opsx:apply`, the `CLAUDE.md` section drives each `## N.` section of `tasks.md` through the same
 steps: implement → self-review the section diff against the spec → `make gates` → tick → devlog note →
-one commit → hand off (runs `/emmz:handoff`, then asks whether to clear the context or restart
-`claude`; the next session starts with `/emmz:pickup`). The run stops and asks on
+one commit. After every task and every section it checks the context: over 40%, it runs
+`/emmz:handoff`, then `clear_and_pickup` (`/clear`, then `/emmz:pickup`) and carries on from the devlog;
+otherwise it just keeps going. The run stops and asks on
 ambiguity, scope changes, human-only verification, or gates that won't go green. When the last section
 lands, it offers `/code-review` before `/opsx:archive`. Fixes from that review become new sections in
 `tasks.md`, built the same way.

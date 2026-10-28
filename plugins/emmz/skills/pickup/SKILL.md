@@ -6,7 +6,7 @@ description: Resume work on an OpenSpec change from its devlog after a /clear or
 # Pickup: resume a change from its devlog
 
 The devlog's newest note is the resume point. It was written on the assumption that the context would be cleared
-(by the section loop's hand-off, or by `/emmz:handoff`), so trust it over guesses. Still verify it against `tasks.md`
+(by the section loop's context check, or by `/emmz:handoff`), so trust it over guesses. Still verify it against `tasks.md`
 and git before acting.
 
 ## 1. Find the change
@@ -68,5 +68,5 @@ Tell the user in a few lines:
 - the task you are about to start, or the question still pending.
 
 Then continue straight into the repo's section loop (for example `/opsx:apply` plus the `CLAUDE.md` workflow): build,
-self-review, gates, section-done devlog note, one commit, hand-off. Don't wait for confirmation unless a question is
+self-review, gates, section-done devlog note, one commit, context check. Don't wait for confirmation unless a question is
 pending or the resume point is ambiguous.

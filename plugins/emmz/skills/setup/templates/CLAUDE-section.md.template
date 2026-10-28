@@ -35,7 +35,8 @@ say why in a devlog note.
 ### Each section (`## N.` in `tasks.md`), in order
 
 1. Note the base commit (`git rev-parse --short HEAD`) — in a start note for larger sections.
-2. Implement the section's tasks, with tests. Write a devlog note for any non-obvious decision.
+2. Implement the section's tasks, with tests. Write a devlog note for any non-obvious decision. After
+   each task, run the **context check** (below).
 3. **Self-review** `git diff <base>` plus untracked files, against the spec requirements rather than
    just the tasks: missing requirements, untested behaviour, swallowed errors, dead or stub code,
    contracts that drifted from earlier sections, violations of `design.md ## Decisions`{{ADR_CLAUSE}}.
@@ -53,9 +54,13 @@ say why in a devlog note.
    - N.1 <task summary>
    - N.2 <task summary>
    ```
-6. **Hand off.** Run `/emmz:handoff` to check that a cold session can resume from the repo alone. Then
-   end the turn by asking whether the user wants to `/clear` the context or restart `claude` before the
-   next step. If they'd rather keep going, continue in this session.
+6. Run the **context check**, then carry on with the next section.
+
+**Context check.** Call the `context_usage` tool. At 40% or under, carry straight on. Over 40%, run
+`/emmz:handoff` so a cold session can resume from the repo alone, then call the `clear_and_pickup` tool
+and end the turn: it runs `/clear`, then `/emmz:pickup`, which picks the work up where the handoff left
+it. Mid-section, leave the section's work uncommitted; the handoff note records it. If either tool is
+missing, run `/emmz:handoff` and end the turn by asking whether to `/clear` or restart `claude`.
 
 ### Finishing a change
 
@@ -65,7 +70,7 @@ say why in a devlog note.
    skill on the change branch before archiving, and run it if they say yes.
 3. Fixes from either review don't land as loose commits. Add them to `tasks.md` as one or more new
    sections (`## N+1. Review fixes: <theme>`), agree them with the user, and build them with the
-   section loop above, hand-off included. Then return to step 2.
+   section loop above, context checks included. Then return to step 2.
 4. Once the review is done or declined and no fix sections are open, **offer** `/opsx:archive`, and
    wait for a yes.
 

@@ -1,7 +1,7 @@
 import type { Register, SessionContextUsage } from 'claude-code'
 
 const TOOL = 'context_usage'
-const THRESHOLDS = [70, 85] as const
+const THRESHOLDS = [40, 50] as const
 
 const describe = (c: SessionContextUsage): string =>
   c.tokens === undefined
@@ -26,7 +26,11 @@ export const register: Register = on => {
 
     announced = crossed
 
-    return `${describe(c)} Passed ${crossed}%: keep tool output lean, and consider whether to wrap up or compact.`
+    return (
+      `${describe(c)} Passed ${crossed}%: keep tool output lean. If you are building an OpenSpec change, ` +
+      'finish the task in hand, then run /emmz:handoff and call clear_and_pickup; otherwise consider ' +
+      'whether to wrap up or compact.'
+    )
   }
 
   on('session.start', async ($, e, next) => {
