@@ -8,7 +8,7 @@ A Claude Code plugin marketplace for OpenSpec-driven development. The lean succe
 | dmon-dev (`dmons`) | emmz-dev-skills (`emmz`) |
 |---|---|
 | worker / reviewer / supervisor subagents | The main thread builds and self-reviews; no subagents |
-| Guard + tripwire hooks | None |
+| Guard + tripwire hooks | No guards; two helper modules (see [Hooks](#hooks)) |
 | `/dmons:scaffold` + `/dmons:update-scaffold` + migrations | `/emmz:setup` — a Makefile and one `CLAUDE.md` section, re-runnable; `/emmz:migrate-from-dmons` to switch over |
 | `/dmons:implementation` skill + `# dmons-config` | The loop lives in `CLAUDE.md`, on top of `/opsx:apply` |
 | One `DEVLOG.md` per change with a pinned `## NEXT` | A `devlog/` folder of append-only timestamped notes; the newest note's `## Next` is the resume point |
@@ -29,6 +29,15 @@ The skills assume a repo with `openspec/` in it (run `openspec init` first) and 
 | `/emmz:devlog` | Writes a note to `openspec/changes/<name>/devlog/YYYYMMDD-HHMM-<slug>.md`. |
 | `/emmz:handoff` | Run before `/clear` or quitting: checks the newest devlog note's `## Next` is the real resume point, `tasks.md` matches what landed, and nothing that only lives in the conversation (decisions, answers, uncommitted or background work) is lost. Writes a handoff note if needed, then says whether it's safe to exit. |
 | `/emmz:pickup` | Run in a fresh session: finds the change, reads the newest devlog note, cross-checks it against `tasks.md` and git, runs the pre-flight, and carries on. |
+
+## Hooks
+
+Two hook modules in `plugins/emmz/hooks/`, registered for every session:
+
+| Module | What it does |
+|---|---|
+| `clear-pickup.ts` | Adds `/clear-pickup [change]` and a `clear_and_pickup` tool the agent can call: each queues `/clear`, then `/emmz:pickup`, once the turn ends. Run `/emmz:handoff` first. |
+| `context-meter.ts` | Adds a `context_usage` tool reporting tokens used, window size and percentage, and nudges the agent once each time the fill passes 70% and 85%. |
 
 ## Install
 

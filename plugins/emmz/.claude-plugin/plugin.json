@@ -1,11 +1,11 @@
 {
   "name": "emmz",
-  "version": "0.1.3",
-  "description": "Lean OpenSpec workflow: greenfield discovery, architecture decisions, a Makefile gate surface plus a CLAUDE.md build loop (no subagents, no hooks), a timestamped devlog folder per change, and a migration off dmons.",
+  "version": "0.1.4",
+  "description": "Lean OpenSpec workflow: greenfield discovery, architecture decisions, a Makefile gate surface plus a CLAUDE.md build loop (no subagents, no hooks), a timestamped devlog folder per change, a migration off dmons, a /clear-pickup command and tool, and a context-usage meter that nudges past 70% and 85%.",
   "author": {
     "name": "emmz",
     "email": "rendle@gmail.com"
   },
   "license": "MIT",
-  "keywords": ["openspec", "workflow", "devlog", "discovery", "architecture", "makefile", "gates"]
+  "keywords": ["openspec", "workflow", "devlog", "discovery", "architecture", "makefile", "gates", "context", "hooks"]
 }
