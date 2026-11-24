@@ -4,7 +4,7 @@
 
 <!-- emmz-setup: {{PLUGIN_VERSION}} -->
 
-Changes are tracked with OpenSpec. Build them with `/opsx:apply`, following this loop on top of it.
+Changes are tracked with OpenSpec. Build them with `/openspec-apply-change`, following this loop on top of it.
 Notes go in the change's `devlog/` folder via `/emmz:devlog`.
 
 ### Gates
@@ -71,7 +71,7 @@ missing, run `/emmz:handoff` and end the turn by asking whether to `/clear` or r
 3. Fixes from either review don't land as loose commits. Add them to `tasks.md` as one or more new
    sections (`## N+1. Review fixes: <theme>`), agree them with the user, and build them with the
    section loop above, context checks included. Then return to step 2.
-4. Once the review is done or declined and no fix sections are open, **offer** `/opsx:archive`, and
+4. Once the review is done or declined and no fix sections are open, **offer** `/openspec-archive-change`, and
    wait for a yes.
 
 ### Stop and ask

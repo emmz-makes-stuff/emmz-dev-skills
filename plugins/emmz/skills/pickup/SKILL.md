@@ -67,6 +67,6 @@ Tell the user in a few lines:
 - what the newest note says was last done;
 - the task you are about to start, or the question still pending.
 
-Then continue straight into the repo's section loop (for example `/opsx:apply` plus the `CLAUDE.md` workflow): build,
+Then continue straight into the repo's section loop (for example `/openspec-apply-change` plus the `CLAUDE.md` workflow): build,
 self-review, gates, section-done devlog note, one commit, context check. Don't wait for confirmation unless a question is
 pending or the resume point is ambiguous.

@@ -1,21 +1,21 @@
 ---
 name: architecture
-description: Turn captured requirements into technology decisions — platform, language(s), frameworks/libraries, datastore, hosting, tooling, the exact build/test/format/lint gate commands, and the dependency log (docs/dependencies.md: every SDK, CLI and login the project needs) — opinionated but evidence-backed, then hand off to opsx:propose. Use after discovery/opsx:explore: "decide the stack", "make the architecture decisions", "choose platform/language/framework", "start the proposal". Needs captured requirements and undecided tech; if there are none, run /emmz:discovery first.
+description: Turn captured requirements into technology decisions — platform, language(s), frameworks/libraries, datastore, hosting, tooling, the exact build/test/format/lint gate commands, and the dependency log (docs/dependencies.md: every SDK, CLI and login the project needs) — opinionated but evidence-backed, then hand off to openspec-propose. Use after discovery/openspec-explore: "decide the stack", "make the architecture decisions", "choose platform/language/framework", "start the proposal". Needs captured requirements and undecided tech; if there are none, run /emmz:discovery first.
 ---
 
 # Architecture — deciding the how
 
 Discovery gathered *what* while deciding nothing about *how*. Now make those deferred calls with the
 user, each one argued from the requirements rather than picked by habit, then hand off to
-`opsx:propose` to shape the change.
+`openspec-propose` to shape the change.
 
 ## Preconditions
 
 1. `openspec/` exists. If not → `openspec init` first.
-2. Requirements have been captured (`docs/DISCOVERY.md` from discovery, or `opsx:explore`). If not →
+2. Requirements have been captured (`docs/DISCOVERY.md` from discovery, or `openspec-explore`). If not →
    `/emmz:discovery`.
 3. The tech is still open (no populated `design.md ## Decisions` or ADRs covering it). If it's already
-   decided → go straight to `opsx:propose` / `opsx:apply`.
+   decided → go straight to `openspec-propose` / `openspec-apply-change`.
 
 ## Stance
 
@@ -37,7 +37,7 @@ user, each one argued from the requirements rather than picked by habit, then ha
 4. **Settle the gate commands** (below).
 5. **Log the dependencies** (below).
 6. **Record** (below).
-7. **Hand off to `opsx:propose`** — the decisions become the change's binding constraints.
+7. **Hand off to `openspec-propose`** — the decisions become the change's binding constraints.
 
 ## Gate commands — no stack is decided until these are
 
@@ -94,5 +94,5 @@ row a still-used tool depends on.
 ## Next step
 
 > Tech decided, dependencies logged, and the change proposed. Next: **`/emmz:setup`** to verify the
-> dependencies and add the Makefile gates and the workflow section to `CLAUDE.md`, then **`/opsx:apply`**
+> dependencies and add the Makefile gates and the workflow section to `CLAUDE.md`, then **`/openspec-apply-change`**
 > to build it.

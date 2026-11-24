@@ -34,7 +34,7 @@ ls openspec/changes/ 2>/dev/null | grep -v '^archive$'
 ## 3. Check it
 
 **`## Next` is current.** This is the most important check. It must name the real next step: the next section
-and its first task, the whole-change review, `/opsx:archive`, or the question being waited on. It must not point
+and its first task, the whole-change review, `/openspec-archive-change`, or the question being waited on. It must not point
 at something this session already finished.
 
 **Nothing lives only in the conversation.** Go back over the session for:

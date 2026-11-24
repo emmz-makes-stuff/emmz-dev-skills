@@ -81,5 +81,5 @@ extra stack, all included in `gates`.
 
 ## Next step
 
-> Set up. Build a change with **`/opsx:apply`** — the workflow section in `CLAUDE.md` drives the loop,
+> Set up. Build a change with **`/openspec-apply-change`** — the workflow section in `CLAUDE.md` drives the loop,
 > and **`/emmz:devlog`** records notes as you go.

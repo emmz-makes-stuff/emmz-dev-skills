@@ -10,20 +10,22 @@ A Claude Code plugin marketplace for OpenSpec-driven development. The lean succe
 | worker / reviewer / supervisor subagents | The main thread builds and self-reviews; no subagents |
 | Guard + tripwire hooks | No guards; one helper module (see [Hooks](#hooks)) |
 | `/dmons:scaffold` + `/dmons:update-scaffold` + migrations | `/emmz:setup` — a Makefile and one `CLAUDE.md` section, re-runnable; `/emmz:migrate-from-dmons` to switch over |
-| `/dmons:implementation` skill + `# dmons-config` | The loop lives in `CLAUDE.md`, on top of `/opsx:apply` |
+| `/dmons:implementation` skill + `# dmons-config` | The loop lives in `CLAUDE.md`, on top of `/openspec-apply-change` |
 | One `DEVLOG.md` per change with a pinned `## NEXT` | A `devlog/` folder of append-only timestamped notes; the newest note's `## Next` is the resume point |
 
 ## Built for OpenSpec
 
-The skills assume a repo with `openspec/` in it (run `openspec init` first) and hand off to the
-`/opsx:*` commands. This marketplace does not install OpenSpec.
+The skills assume OpenSpec 2.x and a repo with `openspec/` in it (run `openspec init` first), and
+hand off to its `openspec-*` skills (`/openspec-explore`, `/openspec-propose`, `/openspec-apply-change`,
+`/openspec-archive-change`). OpenSpec 1.x's `/opsx:*` commands are gone. This marketplace does not
+install OpenSpec.
 
 ## Skills
 
 | Skill | What it does |
 |---|---|
-| `/emmz:discovery` | Greenfield only: gathers requirements (what and why) with zero tech assumptions, documents them in `docs/DISCOVERY.md`, then hands off to `opsx:explore`. |
-| `/emmz:architecture` | Makes the tech decisions against those requirements, including the exact gate commands, and logs every SDK, CLI and login the project needs in `docs/dependencies.md`, then hands off to `opsx:propose`. |
+| `/emmz:discovery` | Greenfield only: gathers requirements (what and why) with zero tech assumptions, documents them in `docs/DISCOVERY.md`, then hands off to `openspec-explore`. |
+| `/emmz:architecture` | Makes the tech decisions against those requirements, including the exact gate commands, and logs every SDK, CLI and login the project needs in `docs/dependencies.md`, then hands off to `openspec-propose`. |
 | `/emmz:setup` | Checks every dependency is installed and authenticated (offers to install; hands logins to you), then writes a `Makefile` of gate targets plus `make deps` (each prints `LABEL_EXIT:<n>`) and an `## OpenSpec workflow` section in `CLAUDE.md`. |
 | `/emmz:migrate-from-dmons` | Removes dmons's agents, hooks and `CLAUDE.md` workflow sections; moves the project's binding decisions and hazards into `CLAUDE.md`; seeds a devlog note from each in-flight `DEVLOG.md`. Run `/emmz:setup` after it. |
 | `/emmz:devlog` | Writes a note to `openspec/changes/<name>/devlog/YYYYMMDD-HHMM-<slug>.md`. |
@@ -49,19 +51,19 @@ One hooks module, `plugins/emmz/hooks/register.ts` (Claude Code allows one per p
 ## Flow
 
 ```
-/emmz:discovery → opsx:explore → /emmz:architecture → opsx:propose → /emmz:setup → /opsx:apply
+/emmz:discovery → openspec-explore → /emmz:architecture → openspec-propose → /emmz:setup → /openspec-apply-change
 ```
 
 An existing repo starts at `/emmz:setup`. A repo scaffolded by dmons runs `/emmz:migrate-from-dmons`
 first, then `/emmz:setup`.
 
-During `/opsx:apply`, the `CLAUDE.md` section drives each `## N.` section of `tasks.md` through the same
+During `/openspec-apply-change`, the `CLAUDE.md` section drives each `## N.` section of `tasks.md` through the same
 steps: implement → self-review the section diff against the spec → `make gates` → tick → devlog note →
 one commit. After every task and every section it checks the context: over 40%, it runs
 `/emmz:handoff`, then `clear_and_pickup` (`/clear`, then `/emmz:pickup`) and carries on from the devlog;
 otherwise it just keeps going. The run stops and asks on
 ambiguity, scope changes, human-only verification, or gates that won't go green. When the last section
-lands, it offers `/code-review` before `/opsx:archive`. Fixes from that review become new sections in
+lands, it offers `/code-review` before `/openspec-archive-change`. Fixes from that review become new sections in
 `tasks.md`, built the same way.
 
 ## Devlog
